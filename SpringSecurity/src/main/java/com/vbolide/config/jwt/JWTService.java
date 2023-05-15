@@ -1,4 +1,4 @@
-package com.vbolide.config.iwt;
+package com.vbolide.config.jwt;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -37,7 +37,7 @@ public class JWTService {
 
 
 	@PostConstruct
-	public void values() {
+	public void checkingValues() {
 		System.out.printf("JWT PROPERTIES :: jwtIssuer: %s, jwtExpiryInMinutes: %s, secretToSignJWT: %s%n", jwtIssuer, jwtExpiryInMinutes, encodedSecret);
 	}
 

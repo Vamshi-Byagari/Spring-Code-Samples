@@ -2,6 +2,7 @@ package com.vbolide.controller;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.validation.Valid;
 
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vbolide.config.exception.APIError;
 import com.vbolide.config.exception.APIErrorException;
-import com.vbolide.config.iwt.JWTService;
+import com.vbolide.config.jwt.JWTService;
 import com.vbolide.model.LoginWrapper;
 import com.vbolide.model.User;
 import com.vbolide.repository.UserRepository;
@@ -43,7 +44,6 @@ public class LoginController {
 			try {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
 				long userId = userRepository.insertUser(user);
-				System.out.printf("userId: %s%n", userId);
 				if(userId > 0) {
 					user.setId(userId);
 					return ResponseEntity.ok(Collections.singletonMap("jwt", jwtService.createJWT(user)));
@@ -64,7 +64,7 @@ public class LoginController {
 	public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginWrapper loginWrapper) {
 
 		User user = userRepository.getUser(loginWrapper.getEmail());
-		if(user == null) {
+		if(Objects.isNull(user)) {
 			APIError apiError = new APIError(HttpStatus.BAD_REQUEST.value(), "validation errors");
 			apiError.addValidationError("email", Collections.singletonList("email doesn't exists"));
 			throw new APIErrorException(apiError);

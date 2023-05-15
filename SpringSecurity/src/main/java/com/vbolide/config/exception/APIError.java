@@ -32,7 +32,6 @@ public class APIError {
 	}
 
 
-	@Setter
 	@Getter
 	@AllArgsConstructor
 	private static class ValidationError{

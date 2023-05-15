@@ -22,7 +22,6 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public ResponseEntity<User> profile(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-		System.out.printf("customUserDetails: %s", customUserDetails.getUser());
 		return ResponseEntity.ok(userRepository.getUser(customUserDetails.getUser().getEmail()));
 	}
 

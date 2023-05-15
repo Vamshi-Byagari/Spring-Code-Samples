@@ -77,8 +77,8 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler{
 		return buildAPIError(status, "unknown error occured", ex, request);
 	}
 
-	/** Handling Spring thrown Exceptions **/
-	
+	/** Handling Application thrown Exceptions **/
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleAllOtherExceptions(Exception ex) {
 
@@ -92,8 +92,8 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler{
 		System.out.printf("APIExceptionHandler::handleAllOtherExceptions: ex: %s, message: %s%n", ex.getClass().getSimpleName(), ex.getLocalizedMessage());
 		return ResponseEntity.status(ex.getApiError().getStatus()).body(ex.getApiError());
 	}
-	
-	
+
+
 	/** Helper methods to build APIError **/
 
 	private ResponseEntity<Object> buildAPIError(HttpStatus status, String message) {

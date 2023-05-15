@@ -25,7 +25,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.vbolide.config.iwt.JWTAuthenticationFilter;
+import com.vbolide.config.jwt.JWTAuthenticationFilter;
 
 @EnableMethodSecurity
 @Configuration
