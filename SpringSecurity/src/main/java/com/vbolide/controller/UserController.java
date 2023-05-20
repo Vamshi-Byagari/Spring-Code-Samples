@@ -22,7 +22,7 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public ResponseEntity<User> profile(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-		return ResponseEntity.ok(userRepository.getUser(customUserDetails.getUser().getEmail()));
+		return ResponseEntity.ok(userRepository.getUserWithEncryptedId(customUserDetails.getUser().getEncId()));
 	}
 
 }

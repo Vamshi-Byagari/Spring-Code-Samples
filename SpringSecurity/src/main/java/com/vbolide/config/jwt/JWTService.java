@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ import io.jsonwebtoken.security.Keys;
 @PropertySource("classpath:jwt.properties")
 public class JWTService {
 
+	private final ApplicationContext context;
+
 
 	@Value("${iss}")
 	private String jwtIssuer;
@@ -34,6 +37,12 @@ public class JWTService {
 	
 	@Value("${secret}")
 	private String encodedSecret;
+
+
+	public JWTService(ApplicationContext context) {
+		this.context = context;
+	}
+
 
 
 	@PostConstruct
@@ -63,7 +72,7 @@ public class JWTService {
 	private Map<String, Object> jwtClaims(User user){
 		HashMap<String, Object> map = new HashMap<>();
 		map.put(JWTClaim.ISSUER, jwtIssuer);
-		map.put(JWTClaim.SUBJECT, user.getEmail());
+		map.put(JWTClaim.SUBJECT, user.getEncId());
 
 		LocalDateTime now = LocalDateTime.now();
 		map.put(JWTClaim.ISSUED_AT, now.atZone(ZoneId.systemDefault()).toEpochSecond());
@@ -73,10 +82,10 @@ public class JWTService {
 
 	private Map<String, Object> privateClaims(User user){
 		HashMap<String, Object> map = new HashMap<>();
-		map.put(JWTClaim.FULL_NAME, user.getFirstName());
+		map.put(JWTClaim.FIRST_NAME, user.getFirstName());
 		map.put(JWTClaim.LAST_NAME, user.getLastName());
 		map.put(JWTClaim.EMAIL, user.getEmail());
-		map.put(JWTClaim.GENDER, user.getGender());
+		map.put(JWTClaim.ROLES, user.getRoles());
 		return map;
 	}
 
@@ -109,7 +118,18 @@ public class JWTService {
 	public boolean isJWTExpired(String jwt){
 		return getClaimFromJWT(jwt, Claims::getExpiration).before(new Date());
 	}
-	
+
+	public User getUser(String jwt) {
+		Claims claims = getClaims(jwt);
+		User user = this.context.getBean(User.class);
+		user.setEncId(claims.getSubject());
+		user.setFirstName(claims.get(JWTClaim.FIRST_NAME, String.class));
+		user.setLastName(claims.get(JWTClaim.LAST_NAME, String.class));
+		user.setEmail(claims.get(JWTClaim.EMAIL, String.class));
+		user.setRoles(claims.get(JWTClaim.ROLES, String.class));
+		return user;
+	}
+
 	/** END:: VALIDATING AND RETRIEVING CLAIM FROM JWT **/
 
 
@@ -125,12 +145,14 @@ public class JWTService {
 	    public static final String ISSUED_AT = "iat";
 	    public static final String ID = "jti";
 
+
+	    //JWT should contain only necessary claims (exclude any sensitive information from JWT)
+
 	    //Private Claims
-	    public static final String FULL_NAME = "fname";
+	    public static final String FIRST_NAME = "fname";
 	    public static final String LAST_NAME = "lname";
 	    public static final String EMAIL = "email";
-	    public static final String MOBILE = "mobile"; //it is not recommended to include sensitive information in a JWT
-	    public static final String GENDER = "gender";	    
+	    public static final String ROLES = "roles";
 
 	}
 

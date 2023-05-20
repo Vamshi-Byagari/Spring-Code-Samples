@@ -3,6 +3,7 @@ package com.vbolide.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,11 +18,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private ApplicationContext context;
+	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			return new CustomUserDetails(userRepository.getUser(username));
+			return context.getBean(CustomUserDetails.class, userRepository.getUserWithEmail(username));
 		}catch (Exception e) {
 			LOG.error("Exception@{}:loadUserByUsername with username: {}", this.getClass().getSimpleName(), username);
 		}

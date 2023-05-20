@@ -3,6 +3,7 @@ package com.vbolide.controller;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -43,6 +44,8 @@ public class LoginController {
 		if(userRepository.isUsernameAvailable(user.getEmail())) {
 			try {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
+				user.setEncId(UUID.randomUUID().toString().replace("-", ""));
+				user.setRoles("ROLE_USER");
 				long userId = userRepository.insertUser(user);
 				if(userId > 0) {
 					user.setId(userId);
@@ -63,7 +66,7 @@ public class LoginController {
 	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginWrapper loginWrapper) {
 
-		User user = userRepository.getUser(loginWrapper.getEmail());
+		User user = userRepository.getUserWithEmail(loginWrapper.getEmail());
 		if(Objects.isNull(user)) {
 			APIError apiError = new APIError(HttpStatus.BAD_REQUEST.value(), "validation errors");
 			apiError.addValidationError("email", Collections.singletonList("email doesn't exists"));

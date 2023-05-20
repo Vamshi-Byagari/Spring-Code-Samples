@@ -21,6 +21,8 @@ public class User {
 
 	private long id;
 
+	private String encId;
+
 	@NotNull
 	@NotBlank
 	@Size(min = 3, max = 15, message = "firstname must be of 3 to 15 characters only")
@@ -50,6 +52,6 @@ public class User {
 	@Pattern(regexp = "([a-zA-Z0-9_]{5,8})?", message = "invalid password. password must contain one or more alphanumeric and _ characters, length must be in between 5 to 8 characters.")
 	private String password;
 
-	private String roles = "ROLE_USER";
+	private String roles;
 
 }

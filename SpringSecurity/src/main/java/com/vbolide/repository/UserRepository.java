@@ -1,6 +1,7 @@
 package com.vbolide.repository;
 
 import java.util.Collections;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class UserRepository {
 		return namedParameterJdbcTemplate.queryForObject(CHECK_USER_NAME_SQL, Collections.singletonMap("email", email), Integer.class) < 1;
 	}
 
-	private static final String INSERT_USER_SQL = "INSERT INTO USER (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, MOBILE, GENDER, ROLES) VALUES(:firstName, :lastName, :email, :password, :mobile, :gender, :roles)";
+	private static final String INSERT_USER_SQL = "INSERT INTO USER (ENCRYPTED_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, MOBILE, GENDER, ROLES) VALUES(:encId, :firstName, :lastName, :email, :password, :mobile, :gender, :roles)";
 	public long insertUser(User user) throws DataAccessException {
 		BeanPropertySqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -42,26 +43,39 @@ public class UserRepository {
 		return update > 0 ? keyHolder.getKey().longValue() : 0;
 	}
 
-	private static final String FETCH_USER_SQL = "SELECT * FROM USER WHERE EMAIL = :email";
-	public User getUser(String email){
+	public User getUserWithEmail(String email){
 		try {
-			NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
-			return namedParameterJdbcTemplate.queryForObject(FETCH_USER_SQL, Collections.singletonMap("email", email), (rs, rowNum) -> {
-				User user = context.getBean(User.class);
-				user.setId(rs.getInt("ID"));
-				user.setFirstName(rs.getString("FIRST_NAME"));
-				user.setLastName(rs.getString("LAST_NAME"));
-				user.setEmail(rs.getString("EMAIL"));
-				user.setPassword(rs.getString("PASSWORD"));
-				user.setGender(rs.getString("GENDER"));
-				user.setMobile(rs.getString("MOBILE"));
-				user.setRoles(rs.getString("ROLES"));
-				return user;
-			});
+			return getUser("SELECT * FROM USER WHERE EMAIL = :email", Collections.singletonMap("email", email));
 		}catch (Exception e) {
-			LOG.error("Exception@{}:getUser with email: {} => {}", this.getClass().getSimpleName(), email, e.getLocalizedMessage());
+			LOG.error("Exception@{}:getUserWithEmail with email: {} => {}", this.getClass().getSimpleName(), email, e.getLocalizedMessage());
 		}
 		return null;
 	}
 
+	public User getUserWithEncryptedId(String encId){
+		try {
+			return getUser("SELECT * FROM USER WHERE ENCRYPTED_ID = :encId", Collections.singletonMap("encId", encId));
+		}catch (Exception e) {
+			LOG.error("Exception@{}:getUserWithEncryptedId with encId: {} => {}", this.getClass().getSimpleName(), encId, e.getLocalizedMessage());
+		}
+		return null;
+	}
+
+	private User getUser(String query, Map<String, Object> sqlParameters) {
+		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+		return namedParameterJdbcTemplate.queryForObject(query, sqlParameters, (rs, rowNum) -> {
+			User user = context.getBean(User.class);
+			user.setId(rs.getInt("ID"));
+			user.setEncId(rs.getString("ENCRYPTED_ID"));
+			user.setFirstName(rs.getString("FIRST_NAME"));
+			user.setLastName(rs.getString("LAST_NAME"));
+			user.setEmail(rs.getString("EMAIL"));
+			user.setPassword(rs.getString("PASSWORD"));
+			user.setGender(rs.getString("GENDER"));
+			user.setMobile(rs.getString("MOBILE"));
+			user.setRoles(rs.getString("ROLES"));
+			return user;
+		});
+	}
+	
 }

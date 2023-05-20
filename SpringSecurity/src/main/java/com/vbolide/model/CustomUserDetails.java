@@ -3,15 +3,19 @@ package com.vbolide.model;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Component
+@Scope("prototype")
 public class CustomUserDetails implements UserDetails{
 
 	private static final long serialVersionUID = 2534479541998486550L;
