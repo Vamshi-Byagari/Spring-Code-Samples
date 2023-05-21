@@ -1,23 +1,25 @@
 package com.vbolide.controller;
 
-import java.security.Principal;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vbolide.model.CustomUserDetails;
+import com.vbolide.model.Message;
+import com.vbolide.service.PrincipalService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Controller;
 
-import com.vbolide.model.CustomUserDetails;
-import com.vbolide.model.Message;
+import java.security.Principal;
 
 @Controller
 public class AppWebSocketController {
 
-	@Autowired
-	private SimpMessagingTemplate simpMessagingTemplate;
+	private final SimpMessagingTemplate simpMessagingTemplate;
+	private final PrincipalService principalService;
 
+	public AppWebSocketController(SimpMessagingTemplate simpMessagingTemplate, PrincipalService principalService){
+		this.simpMessagingTemplate = simpMessagingTemplate;
+		this.principalService = principalService;
+	}
 
 
 	/** IN GENERAL `/topic` IS USED TO PUBLISH MESSAGES TO ALL THE CONNECTED USERS **/
@@ -31,10 +33,8 @@ public class AppWebSocketController {
 		//for e.g @AuthenticationPrincipal CustomUserDetails customUserDetails
 
 		//To retrieve CustomUserDetails from the Principal, if required.
-		CustomUserDetails customUserDetails = null;
-		if(principal instanceof PreAuthenticatedAuthenticationToken) {
-			customUserDetails = ((CustomUserDetails)((PreAuthenticatedAuthenticationToken) principal).getPrincipal());
-		}
+		CustomUserDetails customUserDetails = principalService.getCustomUserDetails(principal);
+		System.out.printf("customUserDetails: %s%n", customUserDetails);
 
 		return message;
 	}
@@ -51,5 +51,7 @@ public class AppWebSocketController {
 	public void chat(Message message) {
 		simpMessagingTemplate.convertAndSendToUser(message.getRecipient(), "/queue", message.getValue());
 	}
+
+
 
 }
