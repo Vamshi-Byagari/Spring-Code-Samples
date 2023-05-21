@@ -1,8 +1,6 @@
 package com.vbolide.repository;
 
-import java.util.Collections;
-import java.util.Map;
-
+import com.vbolide.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -13,7 +11,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.vbolide.model.User;
+import java.util.Collections;
+import java.util.Map;
 
 @Repository
 public class UserRepository {

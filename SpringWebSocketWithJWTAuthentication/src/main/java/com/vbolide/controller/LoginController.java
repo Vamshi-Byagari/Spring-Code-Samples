@@ -1,12 +1,11 @@
 package com.vbolide.controller;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-
-import javax.validation.Valid;
-
+import com.vbolide.config.exception.APIError;
+import com.vbolide.config.exception.APIErrorException;
+import com.vbolide.config.jwt.JWTService;
+import com.vbolide.model.LoginWrapper;
+import com.vbolide.model.User;
+import com.vbolide.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vbolide.config.exception.APIError;
-import com.vbolide.config.exception.APIErrorException;
-import com.vbolide.config.jwt.JWTService;
-import com.vbolide.model.LoginWrapper;
-import com.vbolide.model.User;
-import com.vbolide.repository.UserRepository;
+import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 @RequestMapping("/api")
 @RestController

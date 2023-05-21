@@ -1,10 +1,9 @@
 package com.vbolide.config.websocket.exception;
 
+import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import lombok.Getter;
 
 @Getter
 @Component

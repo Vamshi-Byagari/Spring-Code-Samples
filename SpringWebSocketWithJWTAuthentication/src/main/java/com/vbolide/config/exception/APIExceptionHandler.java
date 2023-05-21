@@ -1,8 +1,5 @@
 package com.vbolide.config.exception;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -18,6 +15,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class APIExceptionHandler extends ResponseEntityExceptionHandler{

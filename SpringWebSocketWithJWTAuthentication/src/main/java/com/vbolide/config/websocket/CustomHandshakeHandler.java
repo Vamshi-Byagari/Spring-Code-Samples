@@ -1,9 +1,7 @@
 package com.vbolide.config.websocket;
 
-import java.security.Principal;
-import java.util.Map;
-import java.util.Objects;
-
+import com.vbolide.config.jwt.JWTService;
+import com.vbolide.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
@@ -13,8 +11,9 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
-import com.vbolide.config.jwt.JWTService;
-import com.vbolide.model.CustomUserDetails;
+import java.security.Principal;
+import java.util.Map;
+import java.util.Objects;
 
 public class CustomHandshakeHandler extends DefaultHandshakeHandler{
 

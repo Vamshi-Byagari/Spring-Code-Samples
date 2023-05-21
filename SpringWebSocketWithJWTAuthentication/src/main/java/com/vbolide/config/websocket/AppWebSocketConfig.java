@@ -1,9 +1,6 @@
 package com.vbolide.config.websocket;
 
-import java.util.Arrays;
-
-import javax.annotation.PostConstruct;
-
+import com.vbolide.config.websocket.exception.CustomStompSubProtocolErrorHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +11,8 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
-import com.vbolide.config.websocket.exception.CustomStompSubProtocolErrorHandler;
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
 
 
 /**

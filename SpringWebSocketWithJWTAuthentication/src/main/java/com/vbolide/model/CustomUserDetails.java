@@ -1,16 +1,15 @@
 package com.vbolide.model;
 
-import java.util.Collection;
-import java.util.Collections;
-
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import lombok.Getter;
-import lombok.ToString;
+import java.util.Collection;
+import java.util.Collections;
 
 @ToString
 @Getter

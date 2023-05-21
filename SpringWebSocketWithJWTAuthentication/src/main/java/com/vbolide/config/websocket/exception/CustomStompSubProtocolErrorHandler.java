@@ -1,7 +1,6 @@
 package com.vbolide.config.websocket.exception;
 
-import java.util.Objects;
-
+import com.vbolide.config.websocket.SimpMessageTemplateWrapper;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -11,7 +10,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
 
-import com.vbolide.config.websocket.SimpMessageTemplateWrapper;
+import java.util.Objects;
 
 public class CustomStompSubProtocolErrorHandler extends StompSubProtocolErrorHandler{
 

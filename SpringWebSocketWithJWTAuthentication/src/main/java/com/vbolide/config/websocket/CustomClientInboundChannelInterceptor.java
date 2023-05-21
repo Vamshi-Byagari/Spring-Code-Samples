@@ -1,7 +1,8 @@
 package com.vbolide.config.websocket;
 
-import java.util.Objects;
-
+import com.vbolide.config.jwt.JWTService;
+import com.vbolide.config.websocket.exception.AuthenticationFailureException;
+import com.vbolide.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
@@ -15,9 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.socket.CloseStatus;
 
-import com.vbolide.config.jwt.JWTService;
-import com.vbolide.config.websocket.exception.AuthenticationFailureException;
-import com.vbolide.model.CustomUserDetails;
+import java.util.Objects;
 
 public class CustomClientInboundChannelInterceptor implements ChannelInterceptor {
 
