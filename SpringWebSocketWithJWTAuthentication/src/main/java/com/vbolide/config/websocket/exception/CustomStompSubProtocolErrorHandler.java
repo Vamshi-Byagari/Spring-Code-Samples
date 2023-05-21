@@ -11,7 +11,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
 
-import com.vbolide.config.websocket.SimplMessageTemplateWrapper;
+import com.vbolide.config.websocket.SimpMessageTemplateWrapper;
 
 public class CustomStompSubProtocolErrorHandler extends StompSubProtocolErrorHandler{
 
@@ -32,8 +32,8 @@ public class CustomStompSubProtocolErrorHandler extends StompSubProtocolErrorHan
 		}
 
 		if(cause instanceof AccessDeniedException) {
-			SimplMessageTemplateWrapper simplMessageTemplateWrapper = context.getBean(SimplMessageTemplateWrapper.class);
-			simplMessageTemplateWrapper.getSimpMessagingTemplate()
+			SimpMessageTemplateWrapper simpMessageTemplateWrapper = context.getBean(SimpMessageTemplateWrapper.class);
+			simpMessageTemplateWrapper.getSimpMessagingTemplate()
 				.convertAndSendToUser(
 				clientHeaderAccessor.getUser().getName(), 
 				"/queue", 

@@ -56,7 +56,7 @@ public class AppWebSocketSecurityConfig extends AbstractSecurityWebSocketMessage
 			//.withSockJS();
 
 		//[1] WebSocket endpoint, where client request to upgrade the HTTP to WebSocket. 
-			//In general it'll be public because websocket protocol upgrade request doesn't support header to authenticate.
+			//In general, it'll be public because websocket protocol upgrade request doesn't support header to authenticate.
 			//It does support request parameters, but not a recommended approach.
 		//[2] For state-less application to access the endpoint.
 
@@ -66,7 +66,7 @@ public class AppWebSocketSecurityConfig extends AbstractSecurityWebSocketMessage
 
 		//[3] to handle the stomp command level errors such as `AccessDeniedException`, 
 			//when a message mapping is protected with the `ADMIN` but a client with `USER` role tries to access
-			//rather than closing websocket just notify the user that he does't have privileges.
+			//rather than closing websocket just notify the user that he doesn't have privileges.
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class AppWebSocketSecurityConfig extends AbstractSecurityWebSocketMessage
 	protected void customizeClientInboundChannel(ChannelRegistration registration) {
 		registration.interceptors(clientInboundChannelInterceptor());
 		//it intercepts the messages coming from the client
-		//Here it is used to authenticate the user with STOMP CONNCET command, the header of the command contains Authorization token.
+		//Here it is used to authenticate the user with STOMP CONNECT command, the header of the command contains Authorization token.
 		//if header contains the token, extract it and create Principal object and set it to StompHeaderAccessor#setUser(...)
 		//if header doesn't contain the token close the wesocket connection.
 	}

@@ -32,7 +32,7 @@ public class CustomClientInboundChannelInterceptor implements ChannelInterceptor
 	public Message<?> preSend(Message<?> message, MessageChannel channel) {
 		System.out.printf("%s::%s headers: %s%n", this.getClass().getSimpleName(), "preSend", message.getHeaders().size());
 		StompHeaderAccessor stompHeaderAccessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-		if(StompCommand.CONNECT.equals(stompHeaderAccessor.getCommand())) {
+		if(!Objects.isNull(stompHeaderAccessor) && StompCommand.CONNECT.equals(stompHeaderAccessor.getCommand())) {
 			String jwt = stompHeaderAccessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION);
 			System.out.printf("%s::%s jwt: %s%n", this.getClass().getSimpleName(), "preSend", jwt);
 			if(Objects.isNull(jwt) || jwt.trim().isEmpty()) {

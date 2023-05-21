@@ -89,12 +89,12 @@ public class JWTService {
 		return map;
 	}
 
-	private SecretKey signinKey() {
+	private SecretKey signingKey() {
 		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(encodedSecret));
 	}
 
 	private String buildJWT(Map<String, Object> jwtClaims) {
-		return Jwts.builder().setClaims(jwtClaims).signWith(signinKey()).compact();
+		return Jwts.builder().setClaims(jwtClaims).signWith(signingKey()).compact();
 	}
 
 	/** END:: CODE TO CREATE JWT **/
@@ -104,7 +104,7 @@ public class JWTService {
 	/** START:: VALIDATING AND RETRIEVING CLAIM FROM JWT **/
 
 	private Claims getClaims(String jwt){
-		return Jwts.parserBuilder().setSigningKey(signinKey()).build().parseClaimsJws(jwt).getBody();
+		return Jwts.parserBuilder().setSigningKey(signingKey()).build().parseClaimsJws(jwt).getBody();
 	}
 
 	public <T> T getClaimFromJWT(String jwt, Function<Claims, T> claimsResolver) {

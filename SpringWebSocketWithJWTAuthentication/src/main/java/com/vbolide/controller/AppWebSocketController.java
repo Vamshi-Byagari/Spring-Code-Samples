@@ -20,8 +20,8 @@ public class AppWebSocketController {
 
 
 
-	/** IN GENERAL `/topic` IS USED TO PUBLISH MESSAGAES TO ALL THE CONNECTED USERS **/
-	//after the successful STOMP CONNECT command, client subscribes to `/topic/updates` to receive any message published to this destination.
+	/** IN GENERAL `/topic` IS USED TO PUBLISH MESSAGES TO ALL THE CONNECTED USERS **/
+	//after the successful STOMP CONNECT command, client subscribes to `/topic/updates` to receive any message published to that destination.
 	//for publish messages to `/topic/updates`, client (or admin) has to send STOMP SEND command to `/app/broadcast`.
 
 	@MessageMapping("/broadcast") //the message mapping value is not fixed (can use any string value)

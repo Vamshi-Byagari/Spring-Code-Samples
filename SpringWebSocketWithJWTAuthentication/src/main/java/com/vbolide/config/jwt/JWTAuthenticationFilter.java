@@ -55,7 +55,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter{
 		}
 
 		String jwt = authorizationHeader.substring(AUTHORIZATION_TYPE.length()).trim();
-		if(Objects.isNull(jwt) || jwt.trim().isEmpty()) {
+		if(jwt.trim().isEmpty()) {
 			invalid(response, HttpStatus.UNAUTHORIZED, "JWT is invlaid");
 			return;
 		}
@@ -72,7 +72,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter{
 					return;
 				}
 
-				//the purpose of jwt is to have the user authenticated w/o username and pawssword.
+				//the purpose of jwt is to have the user authenticated w/o username and password.
 				//as the claims already contains the information of user, we can make use of those and process the request.
 				//if the attacker made changes to claims, then the jwt validation throws exception as it is not matched with the issued jwt.
 

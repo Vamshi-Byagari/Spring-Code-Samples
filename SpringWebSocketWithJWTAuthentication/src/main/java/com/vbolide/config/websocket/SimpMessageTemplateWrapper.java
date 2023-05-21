@@ -6,7 +6,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import lombok.Getter;
 
 @Getter
-public class SimplMessageTemplateWrapper {
+public class SimpMessageTemplateWrapper {
 
 	@Autowired
 	private SimpMessagingTemplate simpMessagingTemplate;

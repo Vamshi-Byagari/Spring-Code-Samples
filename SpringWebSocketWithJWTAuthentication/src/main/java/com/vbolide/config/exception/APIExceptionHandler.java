@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,16 +42,12 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler{
 		addStacktrace(request, ex, apiError);
 
 		ex.getBindingResult()
-			.getFieldErrors()
-			.stream()
-			.collect(Collectors.groupingBy(FieldError::getField))
-			.entrySet()
-			.forEach(e -> 
-				apiError.addValidationError(
-					e.getKey(),
-					e.getValue().stream().map(fe -> fe.getDefaultMessage()).collect(Collectors.toList())
-				)
-			);
+				.getFieldErrors()
+				.stream()
+				.collect(Collectors.groupingBy(FieldError::getField))
+				.forEach((key, value) ->
+					apiError.addValidationError(key, value.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList()))
+				);
 
 		return ResponseEntity.status(status).body(apiError);
 	}

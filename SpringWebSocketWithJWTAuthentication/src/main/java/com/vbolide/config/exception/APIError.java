@@ -37,15 +37,15 @@ public class APIError {
 	private static class ValidationError{
 
 		private String field;
-		private List<String> messsages;
+		private List<String> messages;
 
 	}
 
-	public void addValidationError(String field, List<String> messsages) {
+	public void addValidationError(String field, List<String> messages) {
 		if(validationErrors == null) {
 			validationErrors = new ArrayList<>();
 		}
-		validationErrors.add(new ValidationError(field, messsages));
+		validationErrors.add(new ValidationError(field, messages));
 	}
 
 }

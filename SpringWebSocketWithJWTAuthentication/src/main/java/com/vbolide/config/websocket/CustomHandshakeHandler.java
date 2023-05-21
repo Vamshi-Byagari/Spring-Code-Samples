@@ -36,8 +36,7 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler{
 
 		try {
 			UserDetails userDetails = this.context.getBean(CustomUserDetails.class, jwtService.getUser(jwt));
-			PreAuthenticatedAuthenticationToken authenticationToken = new PreAuthenticatedAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-			return authenticationToken;
+			return new PreAuthenticatedAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 		}catch (Exception e) {
 			return super.determineUser(request, wsHandler, attributes);
 		}

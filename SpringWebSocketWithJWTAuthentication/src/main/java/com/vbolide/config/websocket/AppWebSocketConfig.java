@@ -109,9 +109,9 @@ public class AppWebSocketConfig extends AbstractSecurityWebSocketMessageBrokerCo
 
 	@Bean
 	@Lazy
-	SimplMessageTemplateWrapper simplMessageTemplateWrapper() {
+    SimpMessageTemplateWrapper simplMessageTemplateWrapper() {
 		//wrapper class for `SimpMessagingTemplate`, because injecting it in `AbstractSecurityWebSocketMessageBrokerConfigurer` implementaion is raising CircularDepencecyException.
-		return new SimplMessageTemplateWrapper();
+		return new SimpMessageTemplateWrapper();
 	}
 
 }
