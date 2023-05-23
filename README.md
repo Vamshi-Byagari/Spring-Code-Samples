@@ -1,8 +1,11 @@
 # Spring-Code-Samples
 Spring Framework module wise code samples
 
-SpringSecurity::
-Spring REST application with Spring Security (with JWT Authentication).
+## SpringSecurity
+- Spring Web MVC (REST)
+- Spring Security (JWT Authentication)
 
-SpringWebSocketWithJWTAuthentication::
-Spring REST application with Spring Security (with JWT Authentication) and Spring WebSocket.
+## SpringWebSocketWithJWTAuthentication
+- Spring Web MVC (REST)
+- Spring Security (JWT Authentication)
+- Spring WebSocket (STOMP)
