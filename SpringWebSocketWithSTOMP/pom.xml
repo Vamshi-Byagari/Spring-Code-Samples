@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.vbolide</groupId>
-	<artifactId>SpringWebSocketWithJWTAuthentication</artifactId>
+	<artifactId>SpringWebSocketWithSTOMP</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>SpringWebSocketWithJWTAuthentication</name>
-	<description>Demo project for Spring WebSocket with JWT Authentication</description>
+	<name>SpringWebSocketWithSTOMP</name>
+	<description>Demo project for Spring WebSocket with STOMP</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -106,7 +106,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+<!--			<scope>provided</scope>-->
 		</dependency>
 
 		<dependency>
@@ -129,6 +129,10 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<excludes>
+						<exclude>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-starter-tomcat</artifactId>
+						</exclude>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
