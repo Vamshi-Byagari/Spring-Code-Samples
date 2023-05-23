@@ -5,7 +5,7 @@ Spring Framework module wise code samples, all projects are based on `Spring Boo
 - Spring Web MVC (REST)
 - Spring Security (JWT Authentication)
 
-## SpringWebSocketWithJWTAuthentication
+## SpringWebSocketWithSTOMP
 - Spring Web MVC (REST)
 - Spring Security (JWT Authentication)
 - Spring WebSocket (STOMP)
